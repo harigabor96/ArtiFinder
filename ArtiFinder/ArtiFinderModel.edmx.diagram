@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5d1cc2bfa3e0445fb2818eb5b27a7269" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="ArtiFinderDBModel.AppUsers" Width="1.5" PointX="4" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArtiFinderDBModel.Artifact" Width="1.5" PointX="9.125" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArtiFinderDBModel.Country" Width="1.5" PointX="12.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArtiFinderDBModel.Intermediates" Width="1.5" PointX="6.375" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArtiFinderDBModel.Museum" Width="1.5" PointX="12.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArtiFinderDBModel.Statuses" Width="1.5" PointX="3.875" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_AppUsers_Statuses" ManuallyRouted="false" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_Intermediates_AppUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_Artifact_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_Artifact_Museum" ManuallyRouted="false" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_Intermediates_Artifact" ManuallyRouted="false" />
+        <AssociationConnector Association="ArtiFinderDBModel.FK_Museum_Country" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

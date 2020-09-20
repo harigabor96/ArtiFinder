@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2913F890-D98F-4437-812E-49EB3164A6B9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ArtiFinder</RootNamespace>
+    <AssemblyName>ArtiFinder</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminSearchArtifact.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AdminSearchArtifact.Designer.cs">
+      <DependentUpon>AdminSearchArtifact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminSearchUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AdminSearchUser.Designer.cs">
+      <DependentUpon>AdminSearchUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppUsers.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Artifact.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArtiFinderModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtiFinderModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArtiFinderModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArtiFinderModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtiFinderModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Intermediates.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainAdminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainAdminForm.Designer.cs">
+      <DependentUpon>MainAdminForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainUserForm.Designer.cs">
+      <DependentUpon>MainUserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Museum.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Statuses.cs">
+      <DependentUpon>ArtiFinderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubmitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubmitForm.Designer.cs">
+      <DependentUpon>SubmitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserSearchArtifact.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserSearchArtifact.Designer.cs">
+      <DependentUpon>UserSearchArtifact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserSearchUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserSearchUser.Designer.cs">
+      <DependentUpon>UserSearchUser.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AdminSearchArtifact.resx">
+      <DependentUpon>AdminSearchArtifact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminSearchUser.resx">
+      <DependentUpon>AdminSearchUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainAdminForm.resx">
+      <DependentUpon>MainAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainUserForm.resx">
+      <DependentUpon>MainUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubmitForm.resx">
+      <DependentUpon>SubmitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserSearchArtifact.resx">
+      <DependentUpon>UserSearchArtifact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserSearchUser.resx">
+      <DependentUpon>UserSearchUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EntityDeploy Include="ArtiFinderModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ArtiFinderModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ArtiFinderModel.edmx.diagram">
+      <DependentUpon>ArtiFinderModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ArtiFinderDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ArtiFinderDB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>ArtiFinderDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="ArtiFinderModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ArtiFinderModel.edmx</DependentUpon>
+      <LastGenOutput>ArtiFinderModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ArtiFinderModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ArtiFinderModel.edmx</DependentUpon>
+      <LastGenOutput>ArtiFinderModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

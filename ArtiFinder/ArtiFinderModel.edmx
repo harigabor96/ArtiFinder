@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ArtiFinderDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Facebook" Type="varchar" MaxLength="50" />
+          <Property Name="StatusFK" Type="int" Nullable="false" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
+          <Property Name="Suspended" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Artifact">
+          <Key>
+            <PropertyRef Name="ArtifactSK" />
+          </Key>
+          <Property Name="ArtifactSK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtifactName" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="ShortDescrition" Type="nvarchar" MaxLength="50" />
+          <Property Name="PeriodBegin" Type="int" Nullable="false" />
+          <Property Name="PeriodEnd" Type="int" Nullable="false" />
+          <Property Name="CountryFK" Type="int" Nullable="false" />
+          <Property Name="PlaceOfOrigin" Type="nvarchar" MaxLength="120" />
+          <Property Name="Link" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="MuseumFK" Type="int" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountrySK" />
+          </Key>
+          <Property Name="CountrySK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Intermediates">
+          <Key>
+            <PropertyRef Name="UserFK" />
+            <PropertyRef Name="ArtifactFK" />
+          </Key>
+          <Property Name="UserFK" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ArtifactFK" Type="int" Nullable="false" />
+          <Property Name="IsUploader" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Museum">
+          <Key>
+            <PropertyRef Name="MuseumSK" />
+          </Key>
+          <Property Name="MuseumSK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MuseumName" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Website" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="CountryFK" Type="int" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusSK" />
+          </Key>
+          <Property Name="StatusSK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AppUsers_Statuses">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusSK" />
+            </Principal>
+            <Dependent Role="AppUsers">
+              <PropertyRef Name="StatusFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artifact_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountrySK" />
+            </Principal>
+            <Dependent Role="Artifact">
+              <PropertyRef Name="CountryFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artifact_Museum">
+          <End Role="Museum" Type="Self.Museum" Multiplicity="0..1" />
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Museum">
+              <PropertyRef Name="MuseumSK" />
+            </Principal>
+            <Dependent Role="Artifact">
+              <PropertyRef Name="MuseumFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intermediates_AppUsers">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1" />
+          <End Role="Intermediates" Type="Self.Intermediates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Intermediates">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intermediates_Artifact">
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="1" />
+          <End Role="Intermediates" Type="Self.Intermediates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artifact">
+              <PropertyRef Name="ArtifactSK" />
+            </Principal>
+            <Dependent Role="Intermediates">
+              <PropertyRef Name="ArtifactFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Museum_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Museum" Type="Self.Museum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountrySK" />
+            </Principal>
+            <Dependent Role="Museum">
+              <PropertyRef Name="CountryFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArtiFinderDBModelStoreContainer">
+          <EntitySet Name="AppUsers" EntityType="Self.AppUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artifact" EntityType="Self.Artifact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Intermediates" EntityType="Self.Intermediates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Museum" EntityType="Self.Museum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AppUsers_Statuses" Association="Self.FK_AppUsers_Statuses">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="AppUsers" EntitySet="AppUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artifact_Country" Association="Self.FK_Artifact_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Artifact" EntitySet="Artifact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artifact_Museum" Association="Self.FK_Artifact_Museum">
+            <End Role="Museum" EntitySet="Museum" />
+            <End Role="Artifact" EntitySet="Artifact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intermediates_AppUsers" Association="Self.FK_Intermediates_AppUsers">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="Intermediates" EntitySet="Intermediates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intermediates_Artifact" Association="Self.FK_Intermediates_Artifact">
+            <End Role="Artifact" EntitySet="Artifact" />
+            <End Role="Intermediates" EntitySet="Intermediates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Museum_Country" Association="Self.FK_Museum_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Museum" EntitySet="Museum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ArtiFinderDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Facebook" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusFK" Type="Int32" Nullable="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <Property Name="Suspended" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Statuses" Relationship="Self.FK_AppUsers_Statuses" FromRole="AppUsers" ToRole="Statuses" />
+          <NavigationProperty Name="Intermediates" Relationship="Self.FK_Intermediates_AppUsers" FromRole="AppUsers" ToRole="Intermediates" />
+        </EntityType>
+        <EntityType Name="Artifact">
+          <Key>
+            <PropertyRef Name="ArtifactSK" />
+          </Key>
+          <Property Name="ArtifactSK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtifactName" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortDescrition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PeriodBegin" Type="Int32" Nullable="false" />
+          <Property Name="PeriodEnd" Type="Int32" Nullable="false" />
+          <Property Name="CountryFK" Type="Int32" Nullable="false" />
+          <Property Name="PlaceOfOrigin" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MuseumFK" Type="Int32" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_Artifact_Country" FromRole="Artifact" ToRole="Country" />
+          <NavigationProperty Name="Museum" Relationship="Self.FK_Artifact_Museum" FromRole="Artifact" ToRole="Museum" />
+          <NavigationProperty Name="Intermediates" Relationship="Self.FK_Intermediates_Artifact" FromRole="Artifact" ToRole="Intermediates" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountrySK" />
+          </Key>
+          <Property Name="CountrySK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Artifact" Relationship="Self.FK_Artifact_Country" FromRole="Country" ToRole="Artifact" />
+          <NavigationProperty Name="Museum" Relationship="Self.FK_Museum_Country" FromRole="Country" ToRole="Museum" />
+        </EntityType>
+        <EntityType Name="Intermediates">
+          <Key>
+            <PropertyRef Name="UserFK" />
+            <PropertyRef Name="ArtifactFK" />
+          </Key>
+          <Property Name="UserFK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ArtifactFK" Type="Int32" Nullable="false" />
+          <Property Name="IsUploader" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppUsers" Relationship="Self.FK_Intermediates_AppUsers" FromRole="Intermediates" ToRole="AppUsers" />
+          <NavigationProperty Name="Artifact" Relationship="Self.FK_Intermediates_Artifact" FromRole="Intermediates" ToRole="Artifact" />
+        </EntityType>
+        <EntityType Name="Museum">
+          <Key>
+            <PropertyRef Name="MuseumSK" />
+          </Key>
+          <Property Name="MuseumSK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MuseumName" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Website" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryFK" Type="Int32" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Artifact" Relationship="Self.FK_Artifact_Museum" FromRole="Museum" ToRole="Artifact" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_Museum_Country" FromRole="Museum" ToRole="Country" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusSK" />
+          </Key>
+          <Property Name="StatusSK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AppUsers" Relationship="Self.FK_AppUsers_Statuses" FromRole="Statuses" ToRole="AppUsers" />
+        </EntityType>
+        <Association Name="FK_AppUsers_Statuses">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusSK" />
+            </Principal>
+            <Dependent Role="AppUsers">
+              <PropertyRef Name="StatusFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intermediates_AppUsers">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1" />
+          <End Role="Intermediates" Type="Self.Intermediates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Intermediates">
+              <PropertyRef Name="UserFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artifact_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountrySK" />
+            </Principal>
+            <Dependent Role="Artifact">
+              <PropertyRef Name="CountryFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artifact_Museum">
+          <End Role="Museum" Type="Self.Museum" Multiplicity="0..1" />
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Museum">
+              <PropertyRef Name="MuseumSK" />
+            </Principal>
+            <Dependent Role="Artifact">
+              <PropertyRef Name="MuseumFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intermediates_Artifact">
+          <End Role="Artifact" Type="Self.Artifact" Multiplicity="1" />
+          <End Role="Intermediates" Type="Self.Intermediates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artifact">
+              <PropertyRef Name="ArtifactSK" />
+            </Principal>
+            <Dependent Role="Intermediates">
+              <PropertyRef Name="ArtifactFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Museum_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Museum" Type="Self.Museum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountrySK" />
+            </Principal>
+            <Dependent Role="Museum">
+              <PropertyRef Name="CountryFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArtiFinderDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppUsers" EntityType="Self.AppUsers" />
+          <EntitySet Name="Artifact" EntityType="Self.Artifact" />
+          <EntitySet Name="Country" EntityType="Self.Country" />
+          <EntitySet Name="Intermediates" EntityType="Self.Intermediates" />
+          <EntitySet Name="Museum" EntityType="Self.Museum" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" />
+          <AssociationSet Name="FK_AppUsers_Statuses" Association="Self.FK_AppUsers_Statuses">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="AppUsers" EntitySet="AppUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intermediates_AppUsers" Association="Self.FK_Intermediates_AppUsers">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="Intermediates" EntitySet="Intermediates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artifact_Country" Association="Self.FK_Artifact_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Artifact" EntitySet="Artifact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artifact_Museum" Association="Self.FK_Artifact_Museum">
+            <End Role="Museum" EntitySet="Museum" />
+            <End Role="Artifact" EntitySet="Artifact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intermediates_Artifact" Association="Self.FK_Intermediates_Artifact">
+            <End Role="Artifact" EntitySet="Artifact" />
+            <End Role="Intermediates" EntitySet="Intermediates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Museum_Country" Association="Self.FK_Museum_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Museum" EntitySet="Museum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ArtiFinderDBModelStoreContainer" CdmEntityContainer="ArtiFinderDBEntities">
+          <EntitySetMapping Name="AppUsers">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.AppUsers">
+              <MappingFragment StoreEntitySet="AppUsers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="StatusFK" ColumnName="StatusFK" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artifact">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.Artifact">
+              <MappingFragment StoreEntitySet="Artifact">
+                <ScalarProperty Name="ArtifactSK" ColumnName="ArtifactSK" />
+                <ScalarProperty Name="ArtifactName" ColumnName="ArtifactName" />
+                <ScalarProperty Name="ShortDescrition" ColumnName="ShortDescrition" />
+                <ScalarProperty Name="PeriodBegin" ColumnName="PeriodBegin" />
+                <ScalarProperty Name="PeriodEnd" ColumnName="PeriodEnd" />
+                <ScalarProperty Name="CountryFK" ColumnName="CountryFK" />
+                <ScalarProperty Name="PlaceOfOrigin" ColumnName="PlaceOfOrigin" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="MuseumFK" ColumnName="MuseumFK" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Country">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountrySK" ColumnName="CountrySK" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Intermediates">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.Intermediates">
+              <MappingFragment StoreEntitySet="Intermediates">
+                <ScalarProperty Name="UserFK" ColumnName="UserFK" />
+                <ScalarProperty Name="ArtifactFK" ColumnName="ArtifactFK" />
+                <ScalarProperty Name="IsUploader" ColumnName="IsUploader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Museum">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.Museum">
+              <MappingFragment StoreEntitySet="Museum">
+                <ScalarProperty Name="MuseumSK" ColumnName="MuseumSK" />
+                <ScalarProperty Name="MuseumName" ColumnName="MuseumName" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="CountryFK" ColumnName="CountryFK" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="ArtiFinderDBModel.Statuses">
+              <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="StatusSK" ColumnName="StatusSK" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
